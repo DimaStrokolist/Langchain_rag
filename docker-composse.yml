@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  chatollama:
+    image: ollama/ollama:latest
+    container_name: chatollama
+    ports:
+      - "11434:11434"
+    environment:
+      - OLLAMA_KEEP_ALIVE=5m
+      - OLLAMA_NUM_PARALLEL=1
+    restart: unless-stopped
+    volumes:
+      - ./ollama-models:/root/.ollama/models
+       # TinyLlama хватит 2-4GB
+    mem_reservation: 3g
+    # Своп на случай пиков
+         # 2 ядра достаточно
+    shm_size: '5gb'        # Общая память
+    command: >
+      serve
+
+  ollama_embeddings:
+    image: ollama/ollama:latest
+    container_name: ollama_embeddings
+    ports:
+      - "11435:11434"
+    environment:
+      - MODEL=nomic-embed-text
+    restart: unless-stopped
+    volumes:
+      - ./ollama-models:/root/.ollama/models
+
+
+    command: >
+      serve

@@ -2,8 +2,11 @@ import random
 from typing import Literal
 from langgraph.graph import StateGraph, START, END
 from typing import TypedDict
+
+
 class UserState(TypedDict):
     name: str
+
 def weather(userState):
     return userState
 def rainy_weather(userState):
@@ -38,3 +41,5 @@ with open("graph.png", "wb") as f:
 result = app.invoke({"name":"какая погода?"})
 
 print(result)
+
+#написчать граф самому по аналогии этому, но в ручную
